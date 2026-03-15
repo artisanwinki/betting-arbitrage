@@ -1,0 +1,1 @@
+"import unittest\nfrom src.core.arbitrage_engine import check_arbitrage\n\nclass TestArbitrage(unittest.TestCase):\n    def test_arbitrage_exists(self):\n        odds = [2.1, 2.1]\n        self.assertTrue(check_arbitrage(odds))\n\nif __name__ == \"__main__\":\n    unittest.main()" 
