@@ -31,7 +31,12 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run scraper
+<<<<<<< HEAD
         run: |
           set -e
           echo "Starting SportPesa scraper..."
           python src/data_fetch/sportpesa.py || echo "⚠️ Scraper exited with error, continuing gracefully"
+=======
+        run: | 
+          python src/main.py
+>>>>>>> 86140a024c743484cff82f7b451e943b742c703d
