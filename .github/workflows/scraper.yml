@@ -2,27 +2,36 @@ name: Run Scraper
 
 on:
   schedule:
-    # Runs every 6 hours
-    - cron: "0 */6 * * *"
-  workflow_dispatch:  # allows manual trigger
+    - cron: "0 * * * *"   # every hour
+  workflow_dispatch:       # allow manual trigger
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
+
+      - name: Install Chrome & Chromedriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+          which chromium-browser
+          which chromedriver
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run scraper
         run: |
-          python main.py
+          set -e
+          echo "Starting SportPesa scraper..."
+          python src/data_fetch/sportpesa.py || echo "⚠️ Scraper exited with error, continuing gracefully"
